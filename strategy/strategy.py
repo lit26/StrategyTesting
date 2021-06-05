@@ -83,12 +83,17 @@ class Strategy:
         n_trades = len(self._trades)
         returns = [i['P/L'] for i in self._trades]
         pos_returns = [i for i in returns if i > 0]
+        avg_returns = sum(pos_returns) / len(pos_returns)
         total_pl = 1
         for trade in returns:
             total_pl = total_pl * (1 + trade)
         win_rate = round(len(pos_returns)*100 / n_trades,2)
         total_pl = round(total_pl*100,2)
-        data = {'Stat': [n_trades, win_rate, total_pl]}
-        df_stat = pd.DataFrame(data, index=['# Trades','Win Rate(%)', 'Returns(%)'])
-        return df_trades, df_stat
+        stat = {
+            '# Trades': n_trades,
+            'Win Rate(%)': win_rate, 
+            'Avg Return(%)': round(avg_returns*100,2), 
+            'Returns(%)': total_pl
+        }
+        return df_trades, stat
 
