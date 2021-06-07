@@ -1,1 +1,3 @@
 # StrategyTesting
+
+Testing different indicators.
